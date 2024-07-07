@@ -2,6 +2,10 @@
 
 This repository contains a Flask-based web application for object detection using the YOLO (You Only Look Once) model. The application can process images and video streams, detecting objects and displaying the results.
 
+<div>
+    <img src="./img1.jpg" width="60%" hight="50%">
+</div>
+
 ## Features
 
 - Upload an image and get the detected objects highlighted.
