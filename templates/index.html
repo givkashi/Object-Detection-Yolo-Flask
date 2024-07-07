@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Object Detection Application</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Upload an Image to Apply Object Detection</h1>
+        <form id="upload-form" action="/object-detection/" method="post" enctype="multipart/form-data">
+            <label for="image">Select Image:</label>
+            <input type="file" id="image" name="image" accept="image/*" required><br><br>
+            <input type="submit" value="Upload and Apply Detection">
+        </form>
+        <br>
+        <h2>Output Image:</h2>
+        <img id="output-image" src="" alt="Processed Image">
+        <br>
+        <a id="download-link" href="" download="output.png">Download Image</a>
+    </div>
+
+    <script>
+        document.getElementById('upload-form').onsubmit = async function(event) {
+            event.preventDefault();
+
+            const formData = new FormData(event.target);
+            const response = await fetch('/object-detection/', {
+                method: 'POST',
+                body: formData
+            });
+
+            if (response.ok) {
+                const blob = await response.blob();
+                const url = URL.createObjectURL(blob);
+
+                const outputImage = document.getElementById('output-image');
+                outputImage.src = url;
+
+                const downloadLink = document.getElementById('download-link');
+                downloadLink.href = url;
+            } else {
+                console.error('Failed to process image');
+            }
+        };
+    </script>
+</body>
+</html>
